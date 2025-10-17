@@ -1,8 +1,12 @@
 import os
 import sys
+
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+
+from functions.get_files_info import get_files_info
+
 
 def main():
     print("Hello User!")
@@ -14,15 +18,15 @@ def main():
     if len(sys.argv) < 2:
         print("Usage: python main.py <prompt>")
         return
-    
+
     if len(sys.argv) > 2 and sys.argv[2] == "--verbose":
         verbose = True
-    
+
     user_prompt = sys.argv[1]
 
     messages = [
-    types.Content(role="user", parts=[types.Part(text=user_prompt)]),
-]
+        types.Content(role="user", parts=[types.Part(text=user_prompt)]),
+    ]
 
     response = client.models.generate_content(
         model="gemini-2.5-flash",
@@ -49,4 +53,11 @@ def main():
         print(f"Prompt token count: {prompt_token_count}")
         print(f"Candidates token count: {candidates_token_count}")
 
-main()
+
+# main()
+
+print(
+    get_files_info(
+        "calculator",
+    )
+)
